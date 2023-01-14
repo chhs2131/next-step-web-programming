@@ -14,9 +14,4 @@ public class Calculator {
     int divide(int i, int j) {
         return i / j;
     }
-
-    public static void main(String[] args) {
-        Calculator cal = new Calculator();
-        System.out.println(cal.add(3, 4));
-    }
 }
