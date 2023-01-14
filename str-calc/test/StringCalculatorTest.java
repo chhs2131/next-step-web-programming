@@ -1,18 +1,18 @@
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 class StringCalculatorTest {
+    StringCalculator calc;
 
-    @org.junit.jupiter.api.Test
+    @BeforeEach
+    void setup() {
+        calc = new StringCalculator();
+    }
+
+    @Test
     void add() {
-    }
+        calc.add("1,2,3");
 
-    @org.junit.jupiter.api.Test
-    void subtract() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void multiply() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void divide() {
+        calc.add("//;\n1;2;3");
     }
 }
