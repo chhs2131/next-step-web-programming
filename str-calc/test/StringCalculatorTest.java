@@ -1,6 +1,4 @@
-package main;
-
-class CalculatorTest {
+class StringCalculatorTest {
 
     @org.junit.jupiter.api.Test
     void add() {
