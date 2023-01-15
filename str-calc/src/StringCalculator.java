@@ -1,44 +1,45 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringCalculator {
     private static final String CUSTOM_DELIMITER_PATTERN = "//*\n";
 
     int add(String text) {
-        if (text.isEmpty()) {
+        if (isBlank(text)) {
             return 0;
         }
 
-        // delimiters 생성
-        Deliimiters delimiters = new Deliimiters(text);
-        System.out.println(delimiters.toString());
-
-        // int 리스트로 반환
-        List<Integer> numbers = splitToIntList(text, delimiters);
-        System.out.println(numbers);
-
-        // 덧셈
-        int result = sum(numbers);
-        System.out.println(result);
-        return result;
+        return sum(split(text));
     }
 
-    private List<Integer> splitToIntList(String text, Deliimiters delimiters) {
-        String[] tokens = text.split(delimiters.getDelimitersPattern());
-
-        List<Integer> result = new ArrayList<Integer>();
-        for (String token : tokens) {
-            System.out.println("token: " + token);
-            try {
-                result.add(Integer.parseInt(token.trim()));
-            } catch (NumberFormatException e) {
-            }
+    private static String[] split(String text) {
+        Matcher m = Pattern.compile("//(.)\n(.*)").matcher(text);
+        if (m.find()) {
+            String customDelimiter = m.group(1);
+            return m.group(2).split(customDelimiter);
         }
-        return result;
+        return text.split(",|:");
     }
 
-    private int sum(List<Integer> numbers) {
-        return numbers.stream().mapToInt(Integer::intValue).sum();
+    private static boolean isBlank(String text) {
+        return text == null || text.isEmpty();
+    }
+
+    private int sum(String[] values) {
+        int sum = 0;
+        for (String value : values) {
+            sum += toPositive(value);
+        }
+        return sum;
+    }
+
+    private static int toPositive(String value) {
+        int number = Integer.parseInt(value);
+        if (number < 0) {
+            throw new RuntimeException("음수는 안되요~");
+        }
+        return number;
     }
 }
