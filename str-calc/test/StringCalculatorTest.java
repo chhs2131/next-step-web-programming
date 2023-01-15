@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,23 @@ class StringCalculatorTest {
     public void split() {
         assertArrayEquals(new String[] {"1"}, "1".split(","));
         assertArrayEquals(new String[] {"1", "2"}, "1,2".split(","));
+    }
+
+    @Test
+    public void add_쉼표_또는_콜론_구분자() {
+        assertEquals(6, calc.add("1,2:3"));
+    }
+
+    @Test
+    public void add_Custom_구분자() {
+        assertEquals(6, calc.add("//;\n1;2;3"));
+    }
+
+    @Test
+    public void add_negative() {
+        assertThrows(RuntimeException.class, () -> {
+            calc.add("-1,2,3");
+        });
     }
 
     @Test
